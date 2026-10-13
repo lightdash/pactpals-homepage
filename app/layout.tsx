@@ -3,7 +3,7 @@ import "./globals.css";
 import GoogleAnalytics from "../components/google-analytics";
 
 export const metadata: Metadata = {
-  title: "Pact Pals — Grow Together",
+  title: "Pact Pals | Grow Together",
   description:
     "A friendship-first fitness quest where every workout helps your shared pal hatch.",
   generator: "v0.app",
