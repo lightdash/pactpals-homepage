@@ -1714,3 +1714,12 @@ button:disabled {
 .hero-copy .hero-sub {
   margin-top: 22px;
 }
+
+.hatch-frame {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: clamp(32px, 5vw, 48px) auto 0;
+  border: 0;
+  background: transparent;
+}

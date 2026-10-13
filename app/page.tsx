@@ -1,5 +1,6 @@
 "use client";
 
+import { HatchDemo } from "@/components/hatch-demo";
 import { type FormEvent, type ReactNode, useState } from "react";
 import { getAttribution, trackWaitlistSignup } from "../lib/analytics";
 
@@ -664,6 +665,20 @@ export default function Page() {
               ))}
             </ol>
           </div>
+        </section>
+
+        <section className="section" id="try">
+          <div className="center-head">
+            <p className="kicker">Try a pact</p>
+            <h2 className="h2">
+              Tap to <span className="hl-lime">hatch.</span>
+            </h2>
+            <p className="lede">
+              Everyone hits their steps, every day. Miss one and the egg
+              fades.
+            </p>
+          </div>
+          <HatchDemo />
         </section>
 
         <div className="cloud-band" aria-hidden="true">
