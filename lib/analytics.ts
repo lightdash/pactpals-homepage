@@ -77,3 +77,22 @@ export function trackWaitlistSignup() {
     sessionStorage.setItem(LEAD_KEY, "1");
   } catch { /* Analytics must never interfere with signup success. */ }
 }
+
+let recorded = false;
+export function recordPageview() {
+  try {
+    // A reload is another view; React effect remounts are not. Skip local previews.
+    if (recorded || !["pactpals.com", "www.pactpals.com"].includes(window.location.hostname)
+      || window.location.pathname !== "/") return;
+    recorded = true;
+    const body = JSON.stringify({
+      eventId: crypto.randomUUID(),
+      path: "/",
+      attribution: extractAttribution(window.location.href, document.referrer),
+    });
+    void fetch("https://fit-buds-api.onrender.com/public/pageviews", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body, keepalive: true, credentials: "omit", referrerPolicy: "no-referrer",
+    }).catch(() => { /* Measurement must never interfere with the website. */ });
+  } catch { /* Unsupported or blocked browser APIs must not affect the page. */ }
+}

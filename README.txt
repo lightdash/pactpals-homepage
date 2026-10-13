@@ -69,3 +69,41 @@ or personal details in campaign links.
 
 Checks: pnpm exec tsc --noEmit; node --experimental-strip-types --test
 test/analytics.test.mjs; NODE_ENV=production pnpm build.
+
+Independent homepage view counter
+---------------------------------
+POST /public/pageviews (no token) accepts JSON:
+{"eventId":"9e3b822d-4526-4bfa-aead-57a4cb1136a0","path":"/","attribution":{"utm_source":"reddit"}}
+The Origin header must be https://pactpals.com or https://www.pactpals.com.
+OPTIONS preflight is supported. This restriction is not authentication: a
+non-browser client can spoof Origin. Never embed a private API token here.
+
+204 means the event is stored (or its UUID was already stored); retries with the
+same UUID never add another view. 400 invalid input, 403 disallowed/missing origin,
+413 body over 2048 bytes, 429 over 600 POST attempts/minute per server instance,
+503 storage unavailable. Fields are strict; only path / is currently accepted.
+Attribution optionally contains the five utm_* tags and referrer_host, with the
+same character/length limits as waitlist attribution. No arbitrary URL, IP,
+user-agent, email, geolocation, session ID or fitness-account linkage is stored
+in website_pageviews. The server supplies received_at. Hosting-provider request
+logs are separate from this table.
+
+A new UUID is sent once per homepage document load, including reloads. React
+remounts do not add views. Local previews and the embedded hatch demo are excluded.
+The request is independent of Google Analytics, omits credentials and suppresses
+its Referer header. Failure never blocks the page or signup. It is best-effort,
+without automatic retry, and cannot recover historical views. JavaScript blockers,
+network failures and rate limits can undercount; bots/spoofed events can inflate it.
+
+Read totals privately from the API repository in Render > fit-buds-api > Shell:
+  npm run traffic
+  npm run traffic -- 2026-10-13 2026-10-13
+The default is the last seven Lisbon calendar dates including today. Explicit
+start/end dates are inclusive, in Europe/Lisbon. Output includes total views,
+daily totals, first/last timestamps and source breakdown (UTM source, otherwise
+referring hostname, otherwise direct/unknown). No public read endpoint exists.
+Compare to GA4 Views/page_view for the homepage using the same dates/timezone,
+not GA Sessions or Users. On launch day compare only after collection started;
+the rest of that day's GA views predate this counter. Sources here are event-level,
+not GA session attribution. Rows persist until explicitly removed; no automatic
+expiry is configured for this prototype.

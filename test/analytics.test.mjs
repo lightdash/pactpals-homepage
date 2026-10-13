@@ -39,3 +39,31 @@ test('analytics starts immediately once; signup has no email and repeats only on
   assert.ok(!JSON.stringify(calls).includes('private@example.com'));
   assert.ok(!JSON.stringify(calls).includes('secret'));
 });
+
+test('independent page view counts once per load, strips personal URL data, and omits credentials', async () => {
+  globalThis.location = new URL('https://pactpals.com/?utm_source=reddit&email=private@example.com');
+  globalThis.window = { location };
+  globalThis.document = { referrer: 'https://www.reddit.com/private?token=secret' };
+  const calls=[];
+  globalThis.fetch = async (...args) => { calls.push(args); return {status:204}; };
+  analytics.recordPageview();analytics.recordPageview();
+  assert.equal(calls.length,1);
+  const [url,options]=calls[0];const body=JSON.parse(options.body);
+  assert.equal(url,'https://fit-buds-api.onrender.com/public/pageviews');
+  assert.equal(options.credentials,'omit');assert.equal(options.referrerPolicy,'no-referrer');assert.equal(options.keepalive,true);
+  assert.match(body.eventId,/^[a-f0-9-]{36}$/);assert.equal(body.path,'/');
+  assert.deepEqual(body.attribution,{utm_source:'reddit',referrer_host:'www.reddit.com'});
+  assert.ok(!options.body.includes('private'));assert.ok(!options.body.includes('secret'));
+  const reload=await import('../lib/analytics.ts?reload');reload.recordPageview();
+  assert.equal(calls.length,2);assert.notEqual(JSON.parse(calls[1][1].body).eventId,body.eventId);
+});
+
+test('page views skip previews and survive blocked requests without depending on GA', async () => {
+  const fresh=await import('../lib/analytics.ts?blocked');
+  let calls=0;globalThis.fetch=()=>{calls++;return Promise.reject(Error('blocked'));};
+  window.location=new URL('http://localhost:3000/');fresh.recordPageview();assert.equal(calls,0);
+  window.location=new URL('https://pactpals.com/');
+  assert.doesNotThrow(()=>fresh.recordPageview());await new Promise(resolve=>setImmediate(resolve));assert.equal(calls,1);
+  const throwing=await import('../lib/analytics.ts?throwing');globalThis.fetch=()=>{throw Error('blocked');};
+  assert.doesNotThrow(()=>throwing.recordPageview());
+});
