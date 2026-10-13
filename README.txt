@@ -1,12 +1,12 @@
 Pact Pals homepage
 =================
 
-Public site: https://lightdash.github.io/pactpals-homepage/
+Public site: https://pactpals.com/
 Deploys automatically through GitHub Actions on pushes to v0/pact-pals-homepage.
 
 Build with Node 24 and pnpm 12.3.4:
   pnpm install --frozen-lockfile
-  NODE_ENV=production NEXT_PUBLIC_BASE_PATH=/pactpals-homepage pnpm build
+  NODE_ENV=production pnpm build
   pnpm exec tsc --noEmit
 
 GitHub Pages serves the static out/ directory. The waitlist submits to
@@ -16,21 +16,18 @@ table. The browser needs no credentials. Duplicate signups succeed without
 adding another row. No emails are automatically sent. See lightdash/pactpals
 API.txt for the endpoint contract. Vercel-only analytics are not loaded here.
 
-Connect pactpals.com later
--------------------------
-DNS has intentionally not been changed yet.
-1. In this repo's Settings > Pages, set the custom domain to pactpals.com.
-2. In Namecheap Advanced DNS, replace only conflicting web/parking records at
-   @ and www. Preserve mail and unrelated records. Add these records:
-   A      @      185.199.108.153
-   A      @      185.199.109.153
-   A      @      185.199.110.153
-   A      @      185.199.111.153
-   CNAME  www    lightdash.github.io
-3. Set NEXT_PUBLIC_BASE_PATH to an empty string in .github/workflows/pages.yml
-   and redeploy. Root assets must no longer use /pactpals-homepage.
-4. Wait for GitHub's DNS check and HTTPS certificate, then enable Enforce HTTPS.
-5. Check the homepage, images, and waitlist at https://pactpals.com.
+Homepage design and backup
+--------------------------
+The current homepage reproduces the supplied reference:
+https://claude.ai/artifact/LpwBLEa9jKfL2FP2JnBjsG
+Typography is hosted locally in public/fonts. Pet artwork and the watch photograph
+are the existing repository assets. The duration selector is a design demo;
+its displayed hatch odds are not a server-side game mechanic.
 
-Official DNS guidance:
-https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+The previous homepage is preserved at Git tag:
+backup/homepage-before-claude-design-2026-10-13 (commit 5177847).
+A zip can be downloaded from that tag in GitHub.
+
+The custom domain is pactpals.com, with HTTPS enabled. Production builds use an
+empty base path. To restore the old design, restore app/page.tsx, app/globals.css,
+and app/layout.tsx from the backup tag, then push to the deployment branch.

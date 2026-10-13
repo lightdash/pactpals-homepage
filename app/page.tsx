@@ -1,73 +1,382 @@
-'use client'
+"use client";
 
-import { FormEvent, useState } from 'react'
-import { ArrowRight, Check, ChevronRight, Heart, Lock, Users, Watch } from 'lucide-react'
+import { type FormEvent, useState } from "react";
 
-type PactMode = 'nurture'
-
-const hatchStages = [
-  { label: 'Egg mode', copy: 'Show up to warm it up', icon: '◒' },
-  { label: 'Crack mode', copy: 'Your pact powers the hatch', icon: '✦' },
-  { label: 'Pal mode', copy: 'A new teammate is born', icon: '★' },
-]
+const HATCH_ODDS = {
+  7: [60, 28, 10, 2],
+  14: [45, 32, 18, 5],
+  30: [30, 32, 26, 12],
+};
 
 export default function Page() {
-  const [joined, setJoined] = useState(false)
-  const [stage, setStage] = useState(0)
-  const [hatchClicks, setHatchClicks] = useState(0)
-  const [eggPulse, setEggPulse] = useState(false)
-  const mode: PactMode = 'nurture'
-
-  function tapEgg() {
-    const nextClicks = hatchClicks + 1
-    setEggPulse(true)
-    window.setTimeout(() => setEggPulse(false), 280)
-    setHatchClicks(nextClicks)
-    if (nextClicks >= 6) setStage(2)
-    else if (nextClicks >= 2) setStage(1)
-    else setStage(0)
+  const [days, setDays] = useState<7 | 14 | 30>(14);
+  const odds = HATCH_ODDS[days];
+  const [email, setEmail] = useState("");
+  const [waitlistState, setWaitlistState] = useState<
+    "idle" | "loading" | "joined" | "error"
+  >("idle");
+  function goToJoin() {
+    document.getElementById("join")?.scrollIntoView({ behavior: "smooth" });
   }
-  const [email, setEmail] = useState('')
-  const [waitlistState, setWaitlistState] = useState<'idle' | 'loading' | 'joined' | 'error'>('idle')
-  const isNurture = mode === 'nurture'
-
   async function joinWaitlist(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setWaitlistState('loading')
+    event.preventDefault();
+    if (waitlistState === "loading") return;
+    setWaitlistState("loading");
     try {
-      const response = await fetch('https://fit-buds-api.onrender.com/public/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }), signal: AbortSignal.timeout(15000) })
-      setWaitlistState(response.ok ? 'joined' : 'error')
-      if (response.ok) setEmail('')
+      const response = await fetch(
+        "https://fit-buds-api.onrender.com/public/waitlist",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+          signal: AbortSignal.timeout(15000),
+        },
+      );
+      setWaitlistState(response.ok ? "joined" : "error");
+      if (response.ok) setEmail("");
     } catch {
-      setWaitlistState('error')
+      setWaitlistState("error");
     }
   }
-
   return (
-    <main className={`pact-shell ${isNurture ? 'mode-nurture' : 'mode-conquer'}`}>
-      <nav className="topbar" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Pact Pals home"><span className="brand-mark"><Heart size={15} fill="currentColor" strokeWidth={2.5} /></span><span>PACT<span className="brand-accent">PALS</span></span></a>
-        <div className="nav-pill"><span className="live-dot" /> FITNESS FOR GAMERS</div>
-        <button className="nav-link" type="button" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>HOW IT WORKS <ChevronRight size={15} /></button>
-      </nav>
+    <>
+      <header className="design-1">
+        <a className="design-2" href="#top">
+          <img
+            src="/pact-logo-1.svg"
+            width="50"
+            height="40"
+            alt=""
+            aria-hidden="true"
+          />
+          <span className="design-3">
+            Pact<span className="design-4">Pals</span>
+          </span>
+        </a>
+        <a className="design-5" href="#how-it-works">
+          How it works
+        </a>
+        <a className="design-5" href="#pets">
+          The pets
+        </a>
+        <a className="design-6" href="#join">
+          ▶ Join the waitlist
+        </a>
+      </header>
 
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-line" /> CO-OP FITNESS FOR FRIENDS</p>
-          <h1>Make fitness<br /><em>your side quest.</em></h1>
-          <p className="hero-description">Pick a mystery egg, shake on a shared goal, and show up together. Every walk, run, and workout helps your egg hatch into a fully formed pet you can keep forever.</p>
-          <div className="mode-picker" aria-label="Your pact type"><div className="mode-choice selected"><span className="mode-icon">♡</span><span><strong>NURTURE AN EGG</strong><small>One shared goal · one surprise hatch</small></span><Check size={16} /></div></div>
-          <div className="hero-actions"><button className="primary-button" type="button" onClick={() => setJoined(true)}>{joined ? 'PACT JOINED' : 'START A PACT'} <ArrowRight size={17} /></button><button className="text-button" type="button" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>VIEW THE QUEST <ChevronRight size={15} /></button></div>
-          <div className="social-proof"><div className="avatar-stack"><span>J</span><span>M</span><span>A</span><span>+</span></div><span>MADE FOR FRIENDS WHO SHOW UP</span></div>
-        </div>
-
-      </section>
-
-      <section className="hatch-section" id="how-it-works"><div className="section-heading"><p className="eyebrow"><span className="eyebrow-line" /> THE EGG IS YOUR SAVE FILE</p><h2>Make a pact.<br /><em>Raise a pal.</em></h2><p className="section-intro">Choose a goal, pick a finish line, and seal it with a handshake. Each day your team contributes, the shell cracks a little further. Miss a day and your egg starts to fade.</p></div><div className="creature-gallery"><div className="creature-gallery-art"><img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/pact-pals-pixel-creatures.png`} alt="Four possible pixel creatures hatching from shared eggs" /></div><div className="creature-gallery-copy"><span className="tiny-label">THE HATCH IS A SURPRISE</span><strong>Same pact.<br />New pet.</strong><p>When the shell finally cracks, a fully formed mystery pal joins your collection. Longer pacts give you better odds of a rare hatch. Keep every creature in your library and start the next quest.</p><span className="creature-legend"><i /> Build your pet library</span></div></div><div className="stage-grid">{hatchStages.map((item, index) => <button className={`stage-card ${stage === index ? 'stage-active' : ''}`} key={item.label} type="button" onClick={() => setStage(index)}><span className="stage-count">0{index + 1}</span><span className="stage-icon">{item.icon}</span><span className="stage-label-text">{item.label}</span><span className="stage-copy">{item.copy}</span><span className="stage-check">{stage > index ? <Check size={13} /> : <Lock size={12} />}</span></button>)}</div></section>
-
-      <section className="launch-section" id="join"><div className="launch-copy"><p className="eyebrow"><span className="eyebrow-line" /> EARLY ACCESS IS OPEN</p><h2>Fitness for gamers.<br /><em>Fun for your kids.</em></h2><p>Join the first Pact Pals players and help shape a healthy, accessible fitness game: co-op fitness for friends, fitness for gamers, and a playful way to gamify fitness for your kids without pressure or exhaustion.</p><form className="waitlist-form" onSubmit={joinWaitlist}><input aria-label="Email address" type="email" required placeholder="your@email.com" value={email} onChange={(event) => setEmail(event.target.value)} /><button className="primary-button" type="submit" disabled={waitlistState === 'loading'}>{waitlistState === 'joined' ? "YOU'RE IN" : waitlistState === 'loading' ? 'JOINING...' : 'JOIN THE WAITLIST'} <ArrowRight size={17} /></button></form><span className="waitlist-note">No spam. Just launch news, beta invites, and hatch-day updates.</span>{waitlistState === 'error' && <span className="form-error">Something went wrong. Try again.</span>}</div><div className="wearable-card"><div className="wearable-top"><span>PACT PALS // COMING SOON</span><Watch size={18} /></div><div className="watch-visual"><div className="watch-face"><span className="watch-label">TODAY&apos;S PACT</span><strong>04</strong><span className="watch-unit">DAYS ALIVE</span><div className="watch-progress"><span /></div><small>JULES + MAX · KEEP GOING</small></div></div><div className="wearable-copy"><strong>THE PACT WATCH</strong><span>Your shared egg, your streak, and your pal&apos;s progress — right on your wrist.</span></div></div></section>
-      <section className="pact-callout"><div><p className="eyebrow"><span className="eyebrow-line" /> THE GOLDEN RULE</p><h2>One pact.<br /><em>Everyone shows up.</em></h2></div><div className="callout-copy"><p>Seal it with a handshake, choose your shared goal, and set the finish line. If someone misses a day, the egg starts to fade for the whole team. Keep the streak alive and crack open a surprise you can add to your collection.</p><button className="outline-button" type="button" onClick={() => document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' })}>FIND YOUR PLAYER <ArrowRight size={15} /></button></div></section>
-      <footer><span>© 2026 PACT PALS</span><span className="footer-center"><Heart size={13} fill="currentColor" /> BUILT TOGETHER</span><span>INSERT GOOD HABIT HERE</span></footer>
-    </main>
-  )
+      <main id="top">
+        <section className="design-7">
+          <div className="design-8">
+            <h1 className="design-9">
+              <span className="design-10">Make fitness</span>
+              <span className="design-11">your side</span>
+              <span className="design-10">
+                quest.<span className="design-12"></span>
+              </span>
+            </h1>
+            <p className="design-13">
+              Pick a mystery egg, shake on a shared goal, and show up together.
+              Every walk, run, and workout helps your egg hatch into a fully
+              formed pet you can keep forever.
+            </p>
+            <div className="design-14">
+              <span className="design-15">♡</span>
+              <span className="design-16">
+                <strong className="design-17">NURTURE AN EGG</strong>
+                <span className="design-18">
+                  One shared goal · one surprise hatch
+                </span>
+              </span>
+              <span className="design-19">✔</span>
+            </div>
+            <div className="design-20">
+              <button onClick={goToJoin} className="design-21" type="button">
+                <span>▶ Start a pact</span>
+              </button>
+              <a className="design-22" href="#how-it-works">
+                View the quest ▼
+              </a>
+            </div>
+          </div>
+        </section>
+        <div className="design-23"></div>
+        <section className="design-24" id="how-it-works">
+          <div className="design-25">
+            <div className="design-26">
+              <div>
+                <span className="design-27">THE EGG IS YOUR SAVE FILE</span>
+                <h2 className="design-28">
+                  Make a pact.
+                  <br />
+                  <span className="design-29">Raise a pal.</span>
+                </h2>
+              </div>
+              <p className="design-30">
+                Choose a goal, pick a finish line, and seal it with a handshake.
+                Each day your team contributes, the shell cracks a little
+                further. Miss a day and your egg starts to fade.
+              </p>
+            </div>
+            <div className="design-31">
+              <div className="design-32">
+                <span className="design-33">01</span>
+                <span className="design-34">Choose a goal</span>
+                <span className="design-35">
+                  Walks, runs, workouts — pick what your team will do together.
+                </span>
+              </div>
+              <div className="design-32">
+                <span className="design-33">02</span>
+                <span className="design-34">Pick a finish line</span>
+                <span className="design-35">
+                  Decide how long the pact lasts. Longer pacts, better odds of a
+                  rare hatch.
+                </span>
+              </div>
+              <div className="design-32">
+                <span className="design-33">03</span>
+                <span className="design-34">Seal it with a handshake</span>
+                <span className="design-35">
+                  Everyone commits. One shared egg, one shared goal.
+                </span>
+              </div>
+              <div className="design-36">
+                <span className="design-37">04</span>
+                <span className="design-34">Show up together</span>
+                <span className="design-35">
+                  Each day your team contributes, the shell cracks a little
+                  further.
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div className="design-38"></div>
+        <section className="design-39" id="pets">
+          <div className="design-40">
+            <span className="design-41">THE HATCH IS A SURPRISE</span>
+            <h2 className="design-42">
+              Same pact.
+              <br />
+              <span className="design-43">New pet.</span>
+            </h2>
+            <p className="design-44">
+              When the shell finally cracks, a fully formed mystery pal joins
+              your collection. Longer pacts give you better odds of a rare
+              hatch. Keep every creature in your library and start the next
+              quest.
+            </p>
+            <div className="design-45">
+              <span className="design-46">My pact is</span>
+              <button
+                onClick={() => setDays(7)}
+                aria-pressed={days === 7}
+                className="design-47 duration-button"
+                type="button"
+              >
+                <span>7 days</span>
+              </button>
+              <button
+                onClick={() => setDays(14)}
+                aria-pressed={days === 14}
+                className="design-48 duration-button"
+                type="button"
+              >
+                <span>14 days</span>
+              </button>
+              <button
+                onClick={() => setDays(30)}
+                aria-pressed={days === 30}
+                className="design-47 duration-button"
+                type="button"
+              >
+                <span>30 days</span>
+              </button>
+            </div>
+            <div className="design-49">
+              <span className="design-50">HATCH ODDS</span>
+              <div className="design-51">
+                <span>
+                  <span>Common</span>
+                </span>
+                <span className="design-52">
+                  <span
+                    className="design-53"
+                    style={{ width: `${odds[0]}%` }}
+                  ></span>
+                </span>
+                <span className="design-54">
+                  <span>{odds[0]}</span>%
+                </span>
+              </div>
+              <div className="design-51">
+                <span>
+                  <span>Uncommon</span>
+                </span>
+                <span className="design-52">
+                  <span
+                    className="design-55"
+                    style={{ width: `${odds[1]}%` }}
+                  ></span>
+                </span>
+                <span className="design-54">
+                  <span>{odds[1]}</span>%
+                </span>
+              </div>
+              <div className="design-51">
+                <span>
+                  <span>Rare</span>
+                </span>
+                <span className="design-52">
+                  <span
+                    className="design-56"
+                    style={{ width: `${odds[2]}%` }}
+                  ></span>
+                </span>
+                <span className="design-54">
+                  <span>{odds[2]}</span>%
+                </span>
+              </div>
+              <div className="design-51">
+                <span>
+                  <span>Legendary</span>
+                </span>
+                <span className="design-52">
+                  <span
+                    className="design-57"
+                    style={{ width: `${odds[3]}%` }}
+                  ></span>
+                </span>
+                <span className="design-54">
+                  <span>{odds[3]}</span>%
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="design-58">
+            <div className="design-59">
+              <div className="design-60">
+                <span>PET LIBRARY</span>
+                <span>
+                  <span>3</span>/ 4 FOUND
+                </span>
+              </div>
+              <div className="design-61">
+                <div className="design-62">
+                  <div className="design-63"></div>
+                  <span className="design-64">
+                    <span>Sprout</span>
+                  </span>
+                </div>
+                <div className="design-62">
+                  <div className="design-65"></div>
+                  <span className="design-64">
+                    <span>Puff</span>
+                  </span>
+                </div>
+                <div className="design-62">
+                  <div className="design-66"></div>
+                  <span className="design-64">
+                    <span>Pebble</span>
+                  </span>
+                </div>
+                <div className="design-62">
+                  <div className="design-67"></div>
+                  <span className="design-64">
+                    <span>???</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="design-68" id="join">
+          <div className="design-69">
+            <span className="design-41">EARLY ACCESS IS OPEN</span>
+            <h2 className="design-70">
+              Fitness for gamers.
+              <br />
+              <span className="design-43">Fun for your kids.</span>
+            </h2>
+            <p className="design-44">
+              Join the first Pact Pals players and help shape a healthy,
+              accessible fitness game: co-op fitness for friends, fitness for
+              gamers, and a playful way to gamify fitness for your kids without
+              pressure or exhaustion.
+            </p>
+            <form onSubmit={joinWaitlist} className="design-71 waitlist-form">
+              <input
+                required
+                maxLength={254}
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  setWaitlistState("idle");
+                }}
+                className="design-72 waitlist-input"
+                type="email"
+                aria-label="Email address"
+                placeholder="your@email.com"
+              />
+              <button
+                disabled={waitlistState === "loading"}
+                className="design-73"
+                type="submit"
+              >
+                {waitlistState === "joined"
+                  ? "✓ You’re on the list"
+                  : waitlistState === "loading"
+                    ? "Joining…"
+                    : "▶ Join the waitlist"}
+              </button>
+            </form>
+            <span className="design-74" role="status" aria-live="polite">
+              {waitlistState === "error"
+                ? "Something went wrong. Please try again."
+                : waitlistState === "joined"
+                  ? "You’re on the list! We’ll be in touch."
+                  : "No spam. Just launch news, beta invites, and hatch-day updates."}
+            </span>
+            <div className="design-75">
+              <span className="design-76">iOS</span>
+              <span className="design-76">Android</span>
+              <span className="design-76">Smartwatches</span>
+            </div>
+          </div>
+          <figure className="design-77">
+            <div className="design-78">
+              <span>PACT PALS // COMING SOON</span>
+              <span className="design-29">⌚</span>
+            </div>
+            <img
+              className="design-79"
+              src="/pact-watch-reference.png"
+              alt="An early Pact Pals watch prototype showing a shared step goal"
+            />
+            <figcaption className="design-80">
+              <strong className="design-34">The Pact Watch</strong>
+              <span className="design-81">
+                Your shared egg, your streak, and your pal's progress — right on
+                your wrist.
+              </span>
+            </figcaption>
+          </figure>
+        </section>
+        <div className="design-82"></div>
+        <footer className="design-83">
+          <div className="design-84">
+            <span className="design-85">
+              Insert good
+              <br />
+              habit here.
+            </span>
+            <div className="design-86">
+              <span>© 2026 Pact Pals</span>
+              <span>♥ Built together</span>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </>
+  );
 }
