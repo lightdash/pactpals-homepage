@@ -14,7 +14,6 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html,body{min-height:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);padding-inline:16px;padding-block:24px 40px;
   background-image:radial-gradient(var(--line) 1.5px,transparent 1.5px);background-size:24px 24px}
 .wrap{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
@@ -337,6 +336,6 @@ document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',(
 setN(2);reset();
 </script>
 <script>
-(function(){function post(){parent.postMessage({ppHatchHeight:document.documentElement.scrollHeight},'*');}
+(function(){function post(){var b=document.body,cs=getComputedStyle(b);parent.postMessage({ppHatchHeight:b.getBoundingClientRect().height+parseFloat(cs.marginTop)+parseFloat(cs.marginBottom)},'*');}
 new ResizeObserver(post).observe(document.body);window.addEventListener('load',post);post();})();
 </script></body></html>

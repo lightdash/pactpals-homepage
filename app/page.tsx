@@ -256,7 +256,7 @@ function PixelIcon({ map, className }: { map: string[]; className?: string }) {
   );
 }
 
-function GetTheApp({ note }: { note?: string }) {
+function GetTheApp() {
   return (
     <div className="get-app">
       <div className="get-app-row">
@@ -279,7 +279,6 @@ function GetTheApp({ note }: { note?: string }) {
           </span>
         </a>
       </div>
-      {note && <p className="get-app-note">{note}</p>}
     </div>
   );
 }
@@ -681,12 +680,6 @@ export default function Page() {
           <HatchDemo />
         </section>
 
-        <div className="cloud-band" aria-hidden="true">
-          <Cloud />
-          <Cloud />
-          <Cloud />
-        </div>
-
         <section className="section" id="pets">
           <div className="center-head">
             <p className="kicker">The hatch is a surprise</p>
@@ -827,7 +820,6 @@ export default function Page() {
                   Join our Discord ↗
                 </a>
               </div>
-              <GetTheApp note="Android is out now. iPhone app coming soon: sign up above to be notified when it’s released." />
             </div>
           </Window>
         </section>

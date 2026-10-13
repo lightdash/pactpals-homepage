@@ -185,7 +185,7 @@ a:hover {
 .section {
   max-width: 1180px;
   margin: 0 auto;
-  padding: clamp(64px, 8vw, 112px) var(--gutter);
+  padding: clamp(32px, 4vw, 56px) var(--gutter);
   scroll-margin-top: 80px;
 }
 .split {
@@ -330,21 +330,6 @@ a:hover {
 }
 
 /* ---------- cloud band ---------- */
-.cloud-band {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-.cloud-band .cloud {
-  width: clamp(100px, 16vw, 200px);
-}
-.cloud-band .cloud:nth-child(2) {
-  width: clamp(70px, 10vw, 130px);
-  margin-bottom: 40px;
-}
 
 /* ---------- pets ---------- */
 .center-head {
@@ -486,7 +471,7 @@ a:hover {
 
 /* ---------- footer ---------- */
 .footer {
-  margin-top: clamp(40px, 6vw, 80px);
+  margin-top: clamp(24px, 4vw, 48px);
   background: var(--ink);
   color: var(--paper);
 }
@@ -738,7 +723,7 @@ button:disabled {
 }
 .device-pet {
   position: absolute;
-  left: -54px;
+  left: -78px;
   bottom: 0;
   width: 64px;
   height: auto;
@@ -1512,32 +1497,18 @@ button:disabled {
   border: 2px dashed var(--ink);
   color: var(--ink);
 }
-.get-app-note {
-  margin: 0;
-  max-width: 34em;
-  font-size: 15px;
-  line-height: 1.45;
-  color: var(--muted);
-}
-.join-body .get-app {
-  align-items: center;
-  margin-top: 26px;
-}
-.join-body .get-app-row {
-  justify-content: center;
-}
 
 /* platform windows */
 .get-app-section {
-  padding-top: clamp(56px, 7vw, 88px);
-  padding-bottom: clamp(40px, 5vw, 64px);
+  padding-top: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(24px, 3vw, 40px);
 }
 .platform-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
   gap: 36px;
   max-width: 960px;
-  margin: clamp(36px, 5vw, 56px) auto 0;
+  margin: clamp(28px, 4vw, 40px) auto 0;
 }
 .platform .window-body {
   display: flex;
@@ -1719,7 +1690,7 @@ button:disabled {
   display: block;
   width: 100%;
   max-width: 480px;
-  margin: clamp(32px, 5vw, 48px) auto 0;
+  margin: clamp(12px, 2vw, 24px) auto 0;
   border: 0;
   background: transparent;
 }
