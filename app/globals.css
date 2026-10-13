@@ -544,9 +544,10 @@ a:hover {
 }
 .design-63 {
   aspect-ratio: 2 / 3;
-  background-image: url("/pact-pals-pixel-creatures.png");
-  background-size: 469% auto;
-  background-position: 5.2% 49.7%;
+  background-image: url("/pets/pet-sprout.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   filter: none;
   transition: filter 0.5s;
@@ -560,9 +561,10 @@ a:hover {
 }
 .design-65 {
   aspect-ratio: 2 / 3;
-  background-image: url("/pact-pals-pixel-creatures.png");
-  background-size: 469% auto;
-  background-position: 35% 49.7%;
+  background-image: url("/pets/pet-puff.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   filter: none;
   transition: filter 0.5s;
@@ -570,9 +572,10 @@ a:hover {
 }
 .design-66 {
   aspect-ratio: 2 / 3;
-  background-image: url("/pact-pals-pixel-creatures.png");
-  background-size: 469% auto;
-  background-position: 65% 49.7%;
+  background-image: url("/pets/pet-pebble.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   filter: none;
   transition: filter 0.5s;
@@ -580,9 +583,10 @@ a:hover {
 }
 .design-67 {
   aspect-ratio: 2 / 3;
-  background-image: url("/pact-pals-pixel-creatures.png");
-  background-size: 469% auto;
-  background-position: 94.8% 49.7%;
+  background-image: url("/pets/pet-mystery.svg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: pixelated;
   filter: brightness(0) opacity(0.3);
   transition: filter 0.5s;
