@@ -354,8 +354,8 @@ export default function Page() {
             </div>
             <img
               className="design-79"
-              src="/pact-watch-reference.png"
-              alt="An early Pact Pals watch prototype showing a shared step goal"
+              src="/pact-watch.jpg"
+              alt="A Pact Pals smartwatch showing a shared step goal with a pal"
             />
             <figcaption className="design-80">
               <strong className="design-34">The Pact Watch</strong>
