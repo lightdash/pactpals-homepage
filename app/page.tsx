@@ -212,30 +212,73 @@ function Window({
 const DISCORD_URL = "https://discord.gg/BYZVmV2y9";
 const ANDROID_APK_URL = "https://fit-buds-api.onrender.com/downloads/PactPals.apk";
 
-function GetTheApp({ signupHint }: { signupHint: string }) {
+// Pixel icons on a 9x9 grid.
+const ICON_DOWNLOAD = [
+  "...###...",
+  "...###...",
+  "...###...",
+  "#########",
+  ".#######.",
+  "..#####..",
+  "...###...",
+  "....#....",
+  "#########",
+];
+const ICON_BELL = [
+  "....#....",
+  "..#####..",
+  ".#######.",
+  ".#######.",
+  ".#######.",
+  "#########",
+  "#########",
+  ".........",
+  "...###...",
+];
+
+function PixelIcon({ map, className }: { map: string[]; className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 9 9"
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+    >
+      {map.flatMap((row, y) =>
+        [...row].map((cell, x) =>
+          cell === "#" ? (
+            <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill="currentColor" />
+          ) : null,
+        ),
+      )}
+    </svg>
+  );
+}
+
+function GetTheApp({ note }: { note?: string }) {
   return (
     <div className="get-app">
       <div className="get-app-row">
         <a className="store-btn store-android" href={ANDROID_APK_URL}>
-          <span className="store-icon" aria-hidden="true">
-            ▼
+          <span className="store-icon">
+            <PixelIcon map={ICON_DOWNLOAD} />
           </span>
           <span>
-            <small>Out now</small>
-            Download for Android
+            <small>Android · out now</small>
+            Download the app
           </span>
         </a>
-        <span className="store-btn store-ios" aria-disabled="true">
-          <span className="store-icon" aria-hidden="true">
-            ◷
+        <a className="store-btn store-ios" href="#get-app">
+          <span className="store-icon">
+            <PixelIcon map={ICON_BELL} />
           </span>
           <span>
-            <small>Coming soon</small>
-            iOS app
+            <small>iPhone · coming soon</small>
+            Get notified
           </span>
-        </span>
+        </a>
       </div>
-      <p className="get-app-note">{signupHint}</p>
+      {note && <p className="get-app-note">{note}</p>}
     </div>
   );
 }
@@ -452,10 +495,22 @@ export default function Page() {
   const odds = HATCH_ODDS[days];
   return (
     <>
-      <a className="announce" href="#join">
-        <span aria-hidden="true">✦</span> Founding member access is open now.
-        Claim your spot <span aria-hidden="true">→</span>
-      </a>
+      <div className="app-bar">
+        <p className="app-bar-text">
+          <span className="app-bar-dot" aria-hidden="true" />
+          <strong>Pact Pals is out now on Android.</strong>
+          <span className="app-bar-ios">iPhone coming soon.</span>
+        </p>
+        <div className="app-bar-actions">
+          <a className="app-bar-btn" href={ANDROID_APK_URL}>
+            <PixelIcon map={ICON_DOWNLOAD} className="btn-icon" />
+            Download for Android
+          </a>
+          <a className="app-bar-link" href="#get-app">
+            Get notified for iPhone →
+          </a>
+        </div>
+      </div>
       <header className="nav">
         <a className="brand" href="#top">
           <img
@@ -478,8 +533,8 @@ export default function Page() {
             Discord ↗
           </a>
         </nav>
-        <a className="btn btn-small" href="#join">
-          Get early access
+        <a className="btn btn-small" href="#get-app">
+          Get the app
         </a>
       </header>
 
@@ -496,17 +551,17 @@ export default function Page() {
             <div className="hero-copy">
               <p className="live-badge">
                 <span className="live-dot" aria-hidden="true" />
-                Early access is open
+                Android app out now
               </p>
               <h1 className="hero-title">
                 Make fitness your <span className="hl-pink">side quest.</span>
               </h1>
+              <GetTheApp />
               <p className="hero-sub">
                 Shake on a shared goal with your friends, track every step on
                 your phone and watch, and hatch a pet you keep forever.
               </p>
               <WaitlistForm id="hero-email" cta="Become a founding member" />
-              <GetTheApp signupHint="On iPhone? The iOS app is coming soon. Sign up above to be notified when it’s released." />
               <a
                 className="discord-link"
                 href={DISCORD_URL}
@@ -533,6 +588,46 @@ export default function Page() {
             </div>
           </div>
           <div className="ground" aria-hidden="true" />
+        </section>
+
+        <section className="section get-app-section" id="get-app">
+          <div className="center-head">
+            <p className="kicker">Get the app</p>
+            <h2 className="h2">
+              Android is here. <span className="hl-lime">iPhone is next.</span>
+            </h2>
+          </div>
+          <div className="platform-grid">
+            <Window title="pact_pals.apk" icon="▼" className="platform platform-android">
+              <span className="platform-status is-live">
+                <i aria-hidden="true" /> Out now
+              </span>
+              <h3>Android</h3>
+              <p>
+                Download Pact Pals for Android, start a pact, and add your pals
+                with a friend code.
+              </p>
+              <a className="btn btn-big" href={ANDROID_APK_URL}>
+                <PixelIcon map={ICON_DOWNLOAD} className="btn-icon" />
+                Download for Android
+              </a>
+              <p className="platform-fine">
+                Free download, straight from us. Android may ask you to allow
+                installs from your browser the first time.
+              </p>
+            </Window>
+            <Window title="pact_pals_ios" icon="◷" className="platform platform-ios">
+              <span className="platform-status is-soon">
+                <i aria-hidden="true" /> Coming soon
+              </span>
+              <h3>iPhone</h3>
+              <p>
+                The iOS app is on its way. Leave your email and we’ll tell you
+                the day it’s released.
+              </p>
+              <WaitlistForm id="ios-email" cta="Notify me" />
+            </Window>
+          </div>
         </section>
 
         <section className="features" id="app" aria-label="In the app">
@@ -717,7 +812,7 @@ export default function Page() {
                   Join our Discord ↗
                 </a>
               </div>
-              <GetTheApp signupHint="iOS app coming soon. Sign up above to be notified when it’s released." />
+              <GetTheApp note="Android is out now. iPhone app coming soon: sign up above to be notified when it’s released." />
             </div>
           </Window>
         </section>

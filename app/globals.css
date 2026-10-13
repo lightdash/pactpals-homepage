@@ -1424,53 +1424,68 @@ button:disabled {
 }
 
 /* ---------- get the app ---------- */
+.announce u {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.announce-sep {
+  margin: 0 10px;
+}
 .get-app {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 28px;
+}
+.hero-copy .waitlist {
+  margin-top: 18px;
 }
 .get-app-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
 }
 .store-btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 9px 18px 9px 12px;
-  border: 2px solid var(--ink);
+  gap: 14px;
+  padding: 10px 18px 10px 10px;
+  border: 3px solid var(--ink);
   text-decoration: none;
   text-align: left;
+  transition: transform 0.06s, box-shadow 0.06s;
 }
 .store-btn > span:last-child {
   display: flex;
   flex-direction: column;
-  font: 400 24px/0.95 var(--pixel);
+  gap: 3px;
+  font: 400 27px/0.9 var(--pixel);
 }
 .store-btn small {
-  font: 700 10px/1.4 "Atkinson Hyperlegible", system-ui, sans-serif;
+  font: 700 11px/1.3 "Atkinson Hyperlegible", system-ui, sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .store-icon {
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
-  font-size: 16px;
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+.store-icon svg {
+  width: 24px;
+  height: 24px;
 }
 .store-android {
   background: var(--ink);
   color: var(--paper);
-  box-shadow: 3px 3px 0 var(--pink-deep);
-  transition: transform 0.06s, box-shadow 0.06s;
+  box-shadow: 4px 4px 0 var(--pink-deep);
 }
 .store-android:hover {
   color: var(--paper);
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--pink-deep);
+  box-shadow: 5px 5px 0 var(--pink-deep);
 }
 .store-android small {
   color: var(--lime);
@@ -1480,13 +1495,22 @@ button:disabled {
   color: var(--ink);
 }
 .store-ios {
-  background: transparent;
-  border-style: dashed;
-  color: var(--muted);
-  cursor: default;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.store-ios:hover {
+  color: var(--ink);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.store-ios small {
+  color: var(--pink-deep);
 }
 .store-ios .store-icon {
-  border: 2px dashed var(--muted);
+  background: var(--paper);
+  border: 2px dashed var(--ink);
+  color: var(--ink);
 }
 .get-app-note {
   margin: 0;
@@ -1502,6 +1526,96 @@ button:disabled {
 .join-body .get-app-row {
   justify-content: center;
 }
+
+/* platform windows */
+.get-app-section {
+  padding-top: clamp(56px, 7vw, 88px);
+  padding-bottom: clamp(40px, 5vw, 64px);
+}
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  gap: 36px;
+  max-width: 960px;
+  margin: clamp(36px, 5vw, 56px) auto 0;
+}
+.platform .window-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 26px 26px 28px;
+}
+.platform {
+  display: flex;
+  flex-direction: column;
+}
+.platform .window-body {
+  flex: 1;
+}
+.platform h3 {
+  margin: 0;
+  font: 400 64px/0.85 var(--pixel);
+}
+.platform p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #2b3350;
+}
+.platform-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 2px solid var(--ink);
+  font: 400 20px/1 var(--pixel);
+}
+.platform-status i {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 0 2px var(--ink);
+}
+.platform-status.is-live {
+  background: var(--lime);
+}
+.platform-status.is-live i {
+  background: var(--green, #3ccf6e);
+  animation: pp-caret 1.4s steps(1) infinite;
+}
+.platform-status.is-soon {
+  background: var(--card);
+}
+.platform-status.is-soon i {
+  background: #ffd23f;
+}
+.platform-android {
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.btn-big {
+  margin-top: auto;
+  padding: 16px 24px;
+  font-size: 19px;
+}
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+.platform-fine {
+  font-size: 13px !important;
+  color: var(--muted) !important;
+}
+.platform-ios .waitlist {
+  width: 100%;
+  margin-top: auto;
+}
+.platform-ios .form-status {
+  margin-top: 18px;
+  font-size: 13px;
+}
+
 @media (max-width: 1080px) {
   .hero-copy .get-app {
     align-items: center;
@@ -1509,4 +1623,94 @@ button:disabled {
   .hero-copy .get-app-row {
     justify-content: center;
   }
+}
+@media (max-width: 600px) {
+  .store-btn {
+    width: 100%;
+  }
+  .announce-sep {
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+/* ---------- app bar (top of page) ---------- */
+.app-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 24px;
+  padding: 12px var(--gutter);
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 3px solid var(--lime);
+}
+.app-bar-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 12px;
+  margin: 0;
+  font: 400 26px/1.1 var(--pixel);
+}
+.app-bar-text strong {
+  font-weight: 400;
+  color: var(--lime);
+}
+.app-bar-ios {
+  color: #c9cfe3;
+}
+.app-bar-dot {
+  width: 12px;
+  height: 12px;
+  background: #3ccf6e;
+  box-shadow: 0 0 0 2px var(--paper);
+  animation: pp-caret 1.4s steps(1) infinite;
+}
+.app-bar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 18px;
+}
+.app-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  background: var(--lime);
+  color: var(--ink);
+  border: 2px solid var(--lime);
+  box-shadow: 3px 3px 0 var(--pink);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.app-bar-btn:hover {
+  color: var(--ink);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.app-bar-link {
+  color: var(--paper);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.app-bar-link:hover {
+  color: var(--lime);
+}
+.hero-title + .get-app {
+  margin-top: 26px;
+}
+.hero-copy .hero-sub {
+  margin-top: 22px;
 }
