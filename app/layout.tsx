@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import AnalyticsConsent from "../components/analytics-consent";
+import GoogleAnalytics from "../components/google-analytics";
 
 export const metadata: Metadata = {
   title: "Pact Pals — Grow Together",
@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}<AnalyticsConsent /></body>
+      <body className="antialiased">{children}<GoogleAnalytics /></body>
     </html>
   );
 }

@@ -42,11 +42,10 @@ Disable enhanced form-interaction measurement: our custom generate_lead event
 fires only after the API accepts a waitlist signup. Mark generate_lead as a key
 event in GA4 so acquisition reports can show signup conversion by source.
 
-The Privacy & cookies control lets visitors allow or decline analytics and
-change their choice later. No Google script loads before permission. Advertising
-storage, ad personalization and Google signals are disabled. Email addresses
-are never passed to GA. Page URLs contain only recognized campaign tags;
-referrers are reduced to their hostname. Google remains blocked on decline.
+Analytics starts automatically on page load; there is no cookie banner or
+consent control. Advertising storage, ad personalization and Google signals
+remain disabled. Email addresses are never passed to GA. Page URLs contain
+only recognized campaign tags; referrers are reduced to their hostname.
 
 Use lowercase campaign labels consistently, for example:
 https://pactpals.com/?utm_source=reddit&utm_medium=social&utm_campaign=launch&utm_content=gamification
@@ -56,15 +55,15 @@ https://pactpals.com/?utm_source=discord&utm_medium=social&utm_campaign=launch&u
 GA4 Reports > Acquisition > Traffic acquisition shows session source/medium
 and campaign. Session manual ad content distinguishes utm_content (individual
 subreddits/posts), available in report customization or Explorations.
-Compare sessions and generate_lead key events; figures include consenting,
-unblocked visitors only. The same successful form submission is counted at
+Compare sessions and generate_lead key events; figures include visitors whose browsers load
+the Google tag (ad blockers can prevent measurement). The same successful form submission is counted at
 most once per browser-tab session. Repeat signups in another session may count
 again, so unique email counts in PostgreSQL remain the signup source of truth.
 
-After consent, the homepage also sends optional attribution (the five standard
+The homepage also sends optional attribution (the five standard
 UTM fields and referring hostname) to the API. Attribution survives navigation
 in the same tab; a new campaign replaces it. The database preserves attribution
-from the email's original signup. No consent means email-only signup. Historical
+from the email's original signup. Historical
 visits and preexisting signups cannot be backfilled. Never put emails, tokens,
 or personal details in campaign links.
 
