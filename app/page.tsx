@@ -43,9 +43,9 @@ export default function Page() {
       <header className="design-1">
         <a className="design-2" href="#top">
           <img
-            src="/pact-logo-1.svg"
-            width="50"
-            height="40"
+            src="/pact-pals-egg-logo.svg"
+            width="37"
+            height="44"
             alt=""
             aria-hidden="true"
           />
