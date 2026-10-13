@@ -19,7 +19,10 @@ jobs:
       - uses: pnpm/action-setup@v4
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec tsc --noEmit
+      - run: node --experimental-strip-types --test test/analytics.test.mjs
       - run: pnpm build
+        env:
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

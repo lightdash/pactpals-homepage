@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, useState } from "react";
+import { getAttribution, trackWaitlistSignup } from "../lib/analytics";
 
 const HATCH_ODDS = {
   7: [60, 28, 10, 2],
@@ -28,12 +29,15 @@ export default function Page() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, attribution: getAttribution() }),
           signal: AbortSignal.timeout(15000),
         },
       );
       setWaitlistState(response.ok ? "joined" : "error");
-      if (response.ok) setEmail("");
+      if (response.ok) {
+        setEmail("");
+        trackWaitlistSignup();
+      }
     } catch {
       setWaitlistState("error");
     }

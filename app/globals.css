@@ -764,3 +764,30 @@ button:disabled {
     justify-content: center;
   }
 }
+
+.analytics-settings {
+  display: block;
+  margin: 0 auto 24px;
+  padding: 8px;
+  background: transparent;
+  text-decoration: underline;
+  font-size: 14px;
+}
+.analytics-consent {
+  position: fixed;
+  z-index: 100;
+  bottom: 20px;
+  left: 20px;
+  width: min(440px, calc(100vw - 72px));
+  padding: 16px;
+  border: 2px solid #111a35;
+  background: #f4efe2;
+  box-shadow: 5px 5px 0 #111a35;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.analytics-consent strong { font-size: 18px; }
+.analytics-consent p { margin: 10px 0 14px; }
+.analytics-consent > div { display: flex; gap: 12px; flex-wrap: wrap; }
+.analytics-consent button { padding: 10px 14px; border: 2px solid #111a35; background: #f4efe2; }
+.analytics-consent button:last-child { background: #d9ff2f; }
