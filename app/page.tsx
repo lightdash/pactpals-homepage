@@ -133,7 +133,7 @@ const FAQ = [
   ],
   [
     "Which devices will it work on?",
-    "We’re building for iOS, Android, and smartwatches.",
+    "The Android app is out now, and you can download it from this page. The iOS app is coming soon: sign up and we’ll email you the day it’s released. We’re building for smartwatches too.",
   ],
   [
     "How do I become a founding member?",
@@ -210,6 +210,35 @@ function Window({
 }
 
 const DISCORD_URL = "https://discord.gg/BYZVmV2y9";
+const ANDROID_APK_URL = "https://fit-buds-api.onrender.com/downloads/PactPals.apk";
+
+function GetTheApp({ signupHint }: { signupHint: string }) {
+  return (
+    <div className="get-app">
+      <div className="get-app-row">
+        <a className="store-btn store-android" href={ANDROID_APK_URL}>
+          <span className="store-icon" aria-hidden="true">
+            ▼
+          </span>
+          <span>
+            <small>Out now</small>
+            Download for Android
+          </span>
+        </a>
+        <span className="store-btn store-ios" aria-disabled="true">
+          <span className="store-icon" aria-hidden="true">
+            ◷
+          </span>
+          <span>
+            <small>Coming soon</small>
+            iOS app
+          </span>
+        </span>
+      </div>
+      <p className="get-app-note">{signupHint}</p>
+    </div>
+  );
+}
 
 const FEATURES = [
   ["See who’s ahead", "Your party, ranked by today’s steps."],
@@ -477,6 +506,7 @@ export default function Page() {
                 your phone and watch, and hatch a pet you keep forever.
               </p>
               <WaitlistForm id="hero-email" cta="Become a founding member" />
+              <GetTheApp signupHint="On iPhone? The iOS app is coming soon. Sign up above to be notified when it’s released." />
               <a
                 className="discord-link"
                 href={DISCORD_URL}
@@ -687,10 +717,7 @@ export default function Page() {
                   Join our Discord ↗
                 </a>
               </div>
-              <p className="platforms">
-                Coming to <span>iOS</span> · <span>Android</span> ·{" "}
-                <span>Smartwatches</span>
-              </p>
+              <GetTheApp signupHint="iOS app coming soon. Sign up above to be notified when it’s released." />
             </div>
           </Window>
         </section>
@@ -732,6 +759,11 @@ export default function Page() {
             <div>
               <span className="footer-head">Early access</span>
               <a href="#join">Become a founding member</a>
+            </div>
+            <div>
+              <span className="footer-head">Get the app</span>
+              <a href={ANDROID_APK_URL}>Download for Android</a>
+              <a href="#join">iOS: coming soon</a>
             </div>
             <div>
               <span className="footer-head">Community</span>
