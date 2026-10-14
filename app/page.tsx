@@ -835,6 +835,12 @@ export default function Page() {
               <a href="#join">iOS: coming soon</a>
             </div>
             <div>
+              <span className="footer-head">Privacy & support</span>
+              <a href="https://fit-buds-api.onrender.com/privacy">Privacy policy</a>
+              <a href="https://fit-buds-api.onrender.com/delete-account">Delete account</a>
+              <a href="mailto:rephus@gmail.com">Contact Coconauts</a>
+            </div>
+            <div>
               <span className="footer-head">Community</span>
               <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">
                 Discord ↗
