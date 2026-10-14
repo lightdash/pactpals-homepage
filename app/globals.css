@@ -707,10 +707,6 @@ button:disabled {
   line-height: 1.6;
   color: #2b3350;
 }
-.hero-copy .waitlist {
-  margin-top: 30px;
-  max-width: 560px;
-}
 .hero-devices {
   min-width: 0;
 }
@@ -1318,9 +1314,6 @@ button:disabled {
     margin-left: auto;
     margin-right: auto;
   }
-  .hero-copy .waitlist {
-    width: 100%;
-  }
 }
 @media (max-width: 600px) {
   .devices {
@@ -1419,16 +1412,9 @@ button:disabled {
 .get-app {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 28px;
-}
-.hero-copy .waitlist {
-  margin-top: 18px;
-}
-.get-app-row {
-  display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 14px;
+  margin-top: 32px;
 }
 .store-btn {
   display: inline-flex;
@@ -1477,24 +1463,6 @@ button:disabled {
 }
 .store-android .store-icon {
   background: var(--lime);
-  color: var(--ink);
-}
-.store-ios {
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-.store-ios:hover {
-  color: var(--ink);
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 var(--ink);
-}
-.store-ios small {
-  color: var(--pink-deep);
-}
-.store-ios .store-icon {
-  background: var(--paper);
-  border: 2px dashed var(--ink);
   color: var(--ink);
 }
 
@@ -1591,8 +1559,8 @@ button:disabled {
   .hero-copy .get-app {
     align-items: center;
   }
-  .hero-copy .get-app-row {
-    justify-content: center;
+  .hero-copy .ios-link {
+    align-self: center;
   }
 }
 @media (max-width: 600px) {
@@ -1679,8 +1647,14 @@ button:disabled {
 .app-bar-link:hover {
   color: var(--lime);
 }
-.hero-title + .get-app {
-  margin-top: 26px;
+.ios-link {
+  align-self: flex-start;
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 .hero-copy .hero-sub {
   margin-top: 22px;

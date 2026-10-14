@@ -225,18 +225,6 @@ const ICON_DOWNLOAD = [
   "....#....",
   "#########",
 ];
-const ICON_BELL = [
-  "....#....",
-  "..#####..",
-  ".#######.",
-  ".#######.",
-  ".#######.",
-  "#########",
-  "#########",
-  ".........",
-  "...###...",
-];
-
 function PixelIcon({ map, className }: { map: string[]; className?: string }) {
   return (
     <svg
@@ -259,26 +247,18 @@ function PixelIcon({ map, className }: { map: string[]; className?: string }) {
 function GetTheApp() {
   return (
     <div className="get-app">
-      <div className="get-app-row">
-        <a className="store-btn store-android" href={ANDROID_APK_URL}>
-          <span className="store-icon">
-            <PixelIcon map={ICON_DOWNLOAD} />
-          </span>
-          <span>
-            <small>Android · out now</small>
-            Download the app
-          </span>
-        </a>
-        <a className="store-btn store-ios" href="#get-app">
-          <span className="store-icon">
-            <PixelIcon map={ICON_BELL} />
-          </span>
-          <span>
-            <small>iPhone · coming soon</small>
-            Get notified
-          </span>
-        </a>
-      </div>
+      <a className="store-btn store-android" href={ANDROID_APK_URL}>
+        <span className="store-icon">
+          <PixelIcon map={ICON_DOWNLOAD} />
+        </span>
+        <span>
+          <small>Android · out now</small>
+          Download the app
+        </span>
+      </a>
+      <a className="ios-link" href="#get-app">
+        On iPhone? Get notified when it’s out →
+      </a>
     </div>
   );
 }
@@ -549,27 +529,14 @@ export default function Page() {
           </div>
           <div className="hero-inner">
             <div className="hero-copy">
-              <p className="live-badge">
-                <span className="live-dot" aria-hidden="true" />
-                Android app out now
-              </p>
               <h1 className="hero-title">
                 Make fitness your <span className="hl-pink">side quest.</span>
               </h1>
-              <GetTheApp />
               <p className="hero-sub">
                 Shake on a shared goal with your friends, track every step on
                 your phone and watch, and hatch a pet you keep forever.
               </p>
-              <WaitlistForm id="hero-email" cta="Become a founding member" />
-              <a
-                className="discord-link"
-                href={DISCORD_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Or say hi in our Discord ↗
-              </a>
+              <GetTheApp />
             </div>
             <div className="hero-devices">
               <div className="devices">
