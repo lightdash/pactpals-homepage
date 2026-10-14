@@ -18,22 +18,22 @@ const STEPS = [
   ["Show up together", "Each day your team contributes, the shell cracks a little further."],
 ];
 
-const KIDS_POINTS = [
+const HABIT_POINTS = [
   [
     "Cheer each other on",
-    "Your party shares one goal and can see each other’s steps, so kids get a friendly nudge from friends and family.",
+    "Your party shares one goal and can see each other’s steps. A little encouragement from friends can help you keep going.",
   ],
   [
-    "Progress they can see",
-    "Every active day cracks the shell a little further. Kids can watch their streak grow, and so can you.",
+    "Progress you can see",
+    "Every active day cracks the shell a little further. Watch your streak grow as small steps add up.",
   ],
   [
     "A pace that fits",
-    "Choose a 7, 14, or 30 day pact and a goal that suits your child. The aim is a habit that sticks, without pressure or exhaustion.",
+    "Choose a 7, 14, or 30 day pact and a goal that suits your starting point. Build a habit without pressure or exhaustion.",
   ],
   [
     "Make a pact together",
-    "Start a pact with your kids and show up as a family. A walk after school counts.",
+    "Start a pact with a friend and make time to move together. A walk after work counts.",
   ],
 ];
 
@@ -122,7 +122,7 @@ const FAQ = [
   ],
   [
     "Who can I make a pact with?",
-    "Friends, family, your gaming group, or your kids. It’s built for showing up together without pressure or exhaustion.",
+    "Friends, adult family members, or your gaming group. The first beta is for adults aged 18 and over, at any fitness level.",
   ],
   [
     "What happens if I miss a day?",
@@ -507,7 +507,7 @@ export default function Page() {
         <nav className="nav-links" aria-label="Sections">
           <a href="#how-it-works">How it works</a>
           <a href="#pets">The pets</a>
-          <a href="#kids">For kids</a>
+          <a href="#habits">Build a habit</a>
           <a href="#faq">FAQ</a>
           <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer">
             Discord ↗
@@ -709,24 +709,24 @@ export default function Page() {
           </div>
         </section>
 
-        <section className="section" id="kids">
+        <section className="section" id="habits">
           <div className="split">
             <div>
-              <p className="kicker">For parents</p>
+              <p className="kicker">For everyday people</p>
               <h2 className="h2">
                 Healthy habits,
                 <br />
-                <span className="hl-lime">kid sized.</span>
+                <span className="hl-lime">at your pace.</span>
               </h2>
               <p className="lede">
-                Pact Pals is a safe, healthy way for kids to get moving and
-                keep track of it. Gentle goals, a pal to care for, and progress
-                they can see turn being active into a game they want to play.
+                You don’t need to be fit to start. Pick a manageable goal,
+                invite a friend, and give each other a reason to get moving.
+                The first beta is for adults aged 18 and over.
               </p>
             </div>
-            <Window title="family_pact" icon="♥">
+            <Window title="everyday_pact" icon="♥">
               <ul className="checklist">
-                {KIDS_POINTS.map(([title, body]) => (
+                {HABIT_POINTS.map(([title, body]) => (
                   <li key={title}>
                     <span className="check" aria-hidden="true">
                       [✓]
@@ -755,7 +755,7 @@ export default function Page() {
               <p className="lede">
                 Don’t wait for launch day. Founding members get in first,
                 play before everyone else, and help shape the game for friends,
-                gamers, and families.
+                gamers, and anyone starting a new habit. Beta access is for ages 18+.
               </p>
               <ul className="perks">
                 <li>
@@ -822,7 +822,7 @@ export default function Page() {
               <span className="footer-head">Pact Pals</span>
               <a href="#how-it-works">How it works</a>
               <a href="#pets">The pets</a>
-              <a href="#kids">For kids</a>
+              <a href="#habits">Build a habit</a>
               <a href="#faq">FAQ</a>
             </div>
             <div>

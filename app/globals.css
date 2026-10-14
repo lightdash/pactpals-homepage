@@ -564,8 +564,8 @@ button:disabled {
   }
 }
 
-/* ---------- kids ---------- */
-#kids .split {
+/* ---------- habits ---------- */
+#habits .split {
   align-items: center;
 }
 .checklist {
